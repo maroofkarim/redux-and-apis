@@ -81,32 +81,6 @@ export const SimplePostScreen = () => {
     }
   };
 
-  const patchData = async ({email, name}) => {
-    const token =
-      'eed1728a508ef515adecfbac7cce85cb712c6e4db80bfd70b238293472d0ee8b';
-    const config = {
-      headers: {Authorization: `Bearer ${token}`},
-      'Content-Type': 'application/json',
-    };
-    const values = {
-      id: 43,
-      name: name,
-      email: email,
-      gender: 'female',
-      status: 'active',
-    };
-
-    try {
-      const res = await axios.patch(
-        'https://gorest.co.in/public/v1/users',
-        values,
-        config,
-      );
-    } catch (error) {
-      console.log('here you got error in patch', error);
-    }
-  };
-
   return (
     <SafeAreaView>
       <Formik
@@ -118,7 +92,6 @@ export const SimplePostScreen = () => {
         onSubmit={value => {
           postData({name: value.name, email: value.email});
           deletPost({name: value.name, email: value.email});
-          patchData({name: value.name, email: value.email});
           console.log('here is posteed data', value);
         }}>
         {({handleSubmit, values, errors, handleChange, touched, isValid}) => (
@@ -151,13 +124,6 @@ export const SimplePostScreen = () => {
             <View style={styles.btn}>
               <CustomButton
                 title={'Delete data'}
-                isLoading={isLoading}
-                onPress={handleSubmit}
-              />
-            </View>
-            <View style={styles.btn}>
-              <CustomButton
-                title={'patching data'}
                 isLoading={isLoading}
                 onPress={handleSubmit}
               />

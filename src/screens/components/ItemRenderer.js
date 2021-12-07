@@ -4,6 +4,13 @@ import {CardComponet} from '../CardComponet';
 import {CustomButton} from './BottonComponent';
 import {TextFeild} from './TextInputComponent';
 import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import {
+  DeletingAPiData,
+  DeletingAsyncData,
+  GetPostAsycnData,
+  GetPostData,
+} from '../redux/action';
 
 export const ItemRenderer = ({data, navigation}) => {
   console.log('here is data', data);
@@ -11,55 +18,15 @@ export const ItemRenderer = ({data, navigation}) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const putData = async ({title, body, id}) => {
-    console.log('here is your putdata', id);
-    try {
-      setIsLoading(true);
-
-      const res = await axios({
-        method: 'PUT',
-        url: `https://jsonplaceholder.typicode.com/posts/${id}`,
-        data: {
-          title: title,
-          body: body,
-        },
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      //   console.log('here is json data', res.data);
-      console.log('dasdasdasdasdas', id);
-      setIsLoading(false);
-      setEditMode(false);
-
-      navigation.navigate('HomeScreen');
-    } catch (error) {
-      setIsLoading(false);
-      console.log('you got error in patch data', error);
-    }
+  const dispatch = useDispatch();
+  const handelPress = () => {
+    dispatch(GetPostAsycnData({title: title, body: body, id: data.id}));
+    setEditMode(false);
+  };
+  const deleteData = () => {
+    dispatch(DeletingAsyncData({id: data.id}));
   };
 
-  const deleteData = async ({id}) => {
-    console.log('your id ', id);
-
-    try {
-      setIsLoading(true);
-      const res = await axios({
-        method: 'DELETE',
-        url: `https://jsonplaceholder.typicode.com/posts/${id}`,
-
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      console.log('here is deleted data', res.data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log('you got error in delete data', error);
-    }
-  };
   const onEditpress = ({id, title, body}) => {
     setEditMode(true);
   };
@@ -87,12 +54,7 @@ export const ItemRenderer = ({data, navigation}) => {
             <CustomButton
               title={'Update Data'}
               isLoading={isLoading}
-              onPress={() =>
-                putData({
-                  title: title,
-                  body: body,
-                })
-              }
+              onPress={handelPress}
             />
           </View>
         </View>
@@ -116,12 +78,13 @@ export const ItemRenderer = ({data, navigation}) => {
                 <CustomButton
                   title={'Edit Form'}
                   onPress={() => onEditpress(data)}
+                  isLoading={isLoading}
                 />
               </View>
               <View style={style.btn}>
                 <CustomButton
                   title={'Delete data'}
-                  onPress={() => deleteData({id: data.id})}
+                  onPress={deleteData}
                   isLoading={isLoading}
                 />
               </View>
@@ -139,3 +102,52 @@ const style = StyleSheet.create({
   },
   cardView: {flexDirection: 'row'},
 });
+
+// const putData = async ({title, body, id}) => {
+//   console.log('here is your putdata', id);
+//   try {
+//     setIsLoading(true);
+
+//     const res = await axios({
+//       method: 'PUT',
+//       url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+//       data: {
+//         title: title,
+//         body: body,
+//       },
+//       headers: {
+//         'Content-type': 'application/json; charset=UTF-8',
+//       },
+//     });
+//     //   console.log('here is json data', res.data);
+//     console.log('dasdasdasdasdas', id);
+//     setIsLoading(false);
+//     setEditMode(false);
+
+//     navigation.navigate('HomeScreen');
+//   } catch (error) {
+//     setIsLoading(false);
+//     console.log('you got error in patch data', error);
+//   }
+// };
+
+// const deleteData = async ({id}) => {
+//   console.log('your id ', id);
+
+//   try {
+//     setIsLoading(true);
+//     const res = await axios({
+//       method: 'DELETE',
+//       url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+
+//       headers: {
+//         'Content-type': 'application/json; charset=UTF-8',
+//       },
+//     });
+//     console.log('here is deleted data', res.data);
+//     setIsLoading(false);
+//   } catch (error) {
+//     setIsLoading(false);
+//     console.log('you got error in delete data', error);
+//   }
+// };

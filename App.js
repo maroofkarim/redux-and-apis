@@ -13,6 +13,7 @@ import {deleteData} from './src/screens/DeleteData';
 import {editData} from './src/screens/EditData';
 import {Provider} from 'react-redux';
 import {configureStore} from './src/screens/redux/store';
+import {GoRestApis} from './src/screens/GoRestApis';
 
 const Routes = () => {
   const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const Routes = () => {
         <Stack.Screen name="FetchingIdQurey" component={FetchingIdQurey} />
         <Stack.Screen name="DeletData" component={deleteData} />
         <Stack.Screen name="EditData" component={editData} />
+        <Stack.Screen name="GoRestApis" component={GoRestApis} />
       </Stack.Navigator>
     </NavigationContainer>
   );

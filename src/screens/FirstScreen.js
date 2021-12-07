@@ -5,19 +5,11 @@ import {CustomButton} from './components/BottonComponent';
 import {fetchingApiData, GetApiAsyncData} from './redux/action';
 
 export const FirstScreen = ({navigation}) => {
-  const dispatch = useDispatch();
-  // const data = useSelector(state => state.apiReducerData.ApiData);
-  // onHandlepress = () => {
-  //   dispatch(GetApiAsyncData());
-  // };
   return (
     <View>
       <View style={{margin: 20}}>
         <CustomButton
           title="simple api data"
-          // onPress={() => {
-          //   onHandlepress();
-          // }}
           onPress={() => navigation.navigate('HomeScreen')}
         />
       </View>
@@ -55,6 +47,12 @@ export const FirstScreen = ({navigation}) => {
         <CustomButton
           title="Delete Data "
           onPress={() => navigation.navigate('DeletData')}
+        />
+      </View>
+      <View style={{margin: 20}}>
+        <CustomButton
+          title=" Go rest Apis data "
+          onPress={() => navigation.navigate('GoRestApis')}
         />
       </View>
     </View>

@@ -12,7 +12,6 @@ import {fetchingApiData, GetApiAsyncData} from './redux/action';
 
 export const HomeScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState([]);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(state => state.apiReducerData.ApiData);
