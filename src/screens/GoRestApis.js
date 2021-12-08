@@ -8,13 +8,12 @@ import {
   Text,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {CardComponet} from './CardComponet';
-import {CustomButton} from './components/BottonComponent';
-import {TextFeild} from './components/TextInputComponent';
+import {ItemComponent} from './components/ItemComponent';
 import {
   DeleteGoApiAsyncData,
   GetApiAsyncData,
   GetGoAPiAsyncData,
+  PostGoApiAsyncData,
 } from './redux/action';
 
 export const GoRestApis = () => {
@@ -33,9 +32,7 @@ export const GoRestApis = () => {
   const onRefresh = () => {
     dispatch(GetGoAPiAsyncData());
   };
-  const deleteData = () => {
-    dispatch(DeleteGoApiAsyncData());
-  };
+
   const onEditpress = ({id, title, body}) => {
     setEditMode(true);
   };
@@ -56,67 +53,28 @@ export const GoRestApis = () => {
           refreshing={isLoading}
           renderItem={({item, index}) => {
             return (
-              <View style={{padding: 30}}>
-                {editMode ? (
-                  <View>
-                    <View style={{marginTop: 50}}>
-                      <TextFeild
-                        label="Title"
-                        onChangeText={value => setTitle(value)}
-                        placeholder="title"
-                        value={title}
-                      />
-                    </View>
-                    <View>
-                      <TextFeild
-                        label="Body"
-                        onChangeText={value => setBody(value)}
-                        placeholder="body"
-                        value={body}
-                      />
-                    </View>
-                    <View style={style.btn}>
-                      <CustomButton
-                        title={'Update Data'}
-                        isLoading={isLoading}
-                        // onPress={handelPress}
-                      />
-                    </View>
-                  </View>
-                ) : (
-                  <CardComponet
-                    // onPress={() =>
-                    //   navigation.navigate('FetchingIdData', {
-                    //     id: item.id,
-                    //   })
-                    // }
-                    id={item.id}
-                    title={item.title}
-                    body={item.body}
-                    renderData={
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-around',
-                        }}>
-                        <View style={style.btn}>
-                          <CustomButton
-                            title={'Edit Form'}
-                            onPress={() => onEditpress(data)}
-                            isLoading={isLoading}
-                          />
-                        </View>
-                        <View style={style.btn}>
-                          <CustomButton
-                            title={'Delete data'}
-                            onPress={deleteData}
-                            isLoading={isLoading}
-                          />
-                        </View>
-                      </View>
-                    }
-                  />
-                )}
+              <View>
+                <ItemComponent
+                  compnetId={item.id}
+                  componentBody={item.body}
+                  componentTitle={item.title}
+                  onChangeBody={value => setBody(value)}
+                  onChangeBodyValue={body}
+                  onChangeTitle={value => setTitle(value)}
+                  onChangeTitleValue={title}
+                  deleteButtonPress={() => {
+                    dispatch(DeleteGoApiAsyncData({id: item.id}));
+                  }}
+                  updateData={() => {
+                    dispatch(
+                      PostGoApiAsyncData({
+                        title: title,
+                        body: body,
+                        id: item.id,
+                      }),
+                    );
+                  }}
+                />
               </View>
             );
           }}

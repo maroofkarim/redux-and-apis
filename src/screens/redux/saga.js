@@ -86,11 +86,20 @@ function* SagaGoGetData(action) {
   }
 }
 
-function* SagaGoPostData() {
+function* SagaGoPostData(action) {
+  const {title, body, id} = action?.payload;
+  console.log('here is data in saga :', {title, id, body});
   try {
     const {data} = yield call(axios, {
-      url: 'https://gorest.co.in/public/v1/users',
-      method: 'POST',
+      url: 'https://gorest.chttps://gorest.co.in/public/v1/comments',
+      method: 'PUT',
+      data: {
+        id: id,
+        post_id: 104,
+        name: title,
+        email: 'divya_shukla@huel.co',
+        body: body,
+      },
     });
     console.log('here is saga go post data', data);
     yield put(PostGOApiData({payload: data}));
@@ -99,11 +108,13 @@ function* SagaGoPostData() {
   }
 }
 
-function* SagaGoDeleteData() {
+function* SagaGoDeleteData(action) {
+  const {id} = action?.payload;
+  console.log('here is your id in saga', id);
   try {
     console.log('working here dost');
     const {data} = yield call(axios, {
-      url: 'https://gorest.co.in/public/v1/todos/public/v1/users/123',
+      url: `https://gorest.co.in/public/v1/users/${id}`,
       method: 'DELETE',
     });
     yield put(DeleteGoApiData({payload: data}));

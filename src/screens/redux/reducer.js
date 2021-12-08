@@ -38,7 +38,6 @@ export const apiReducerData = (state = initialState, action) => {
     case SAGA_GOGET_DATA: {
       const _state = {...state};
       _state.GoApiData = action.payload;
-      console.log('reduu ============ ', _state);
       return _state;
     }
     case SAGA_GOPOST_DATA: {

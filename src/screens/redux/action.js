@@ -90,9 +90,10 @@ export const PostGOApiData = ({payload}) => {
     payload,
   };
 };
-export const PostGoApiAsyncData = () => {
+export const PostGoApiAsyncData = payload => {
   return {
     type: SAGA_POST_DATA_ASYNC,
+    payload,
   };
 };
 export const DeleteGoApiData = ({payload}) => {
@@ -101,8 +102,9 @@ export const DeleteGoApiData = ({payload}) => {
     payload,
   };
 };
-export const DeleteGoApiAsyncData = () => {
+export const DeleteGoApiAsyncData = payload => {
   return {
     type: SAGA_GODELETE_DATA_ASYNC,
+    payload,
   };
 };
